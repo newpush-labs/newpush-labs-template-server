@@ -32,6 +32,10 @@ def modify_json():
             placeholder = '{'+'$'+key+'}'
             print(f"Replacing {placeholder} with {value}")
             json_content = json_content.replace(placeholder, value)
+
+            placeholder = '$'+'{'+key+'}'
+            print(f"Replacing {placeholder} with {value}")
+            json_content = json_content.replace(placeholder, value)
             # print(json_content)
         
         return json_content, 200, {'Content-Type': 'application/json'}
