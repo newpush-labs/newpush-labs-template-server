@@ -46,7 +46,7 @@
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| FR-3.1 | Provide a health-check endpoint (e.g., `GET /` or `GET /health`) returning HTTP 200 | **Not Implemented** |
+| FR-3.1 | Provide a health-check endpoint (e.g., `GET /` or `GET /health`) returning HTTP 200 | Implemented |
 
 ---
 
@@ -56,7 +56,7 @@
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| NFR-1.1 | Respond within 5 seconds under normal upstream latency | Assumed (no timeout configured) |
+| NFR-1.1 | Respond within 5 seconds under normal upstream latency | Implemented (10s timeout) |
 | NFR-1.2 | Support concurrent requests via Gunicorn worker processes | Implemented (Gunicorn) |
 
 ### NFR-2: Reliability
@@ -64,15 +64,15 @@
 | ID | Requirement | Status |
 |----|-------------|--------|
 | NFR-2.1 | Gracefully handle upstream HTTP errors (4xx, 5xx) and return meaningful error messages | Implemented |
-| NFR-2.2 | Gracefully handle network timeouts or connection failures to upstream | Partial (no explicit timeout set) |
+| NFR-2.2 | Gracefully handle network timeouts or connection failures to upstream | Implemented |
 
 ### NFR-3: Security
 
 | ID | Requirement | Status |
 |----|-------------|--------|
-| NFR-3.1 | Do not log or expose sensitive substitution values in production | **Not Implemented** (print statements log all replacements) |
-| NFR-3.2 | Validate that `portainer_template_url` points to an allowed domain or URL scheme (HTTPS only) | **Not Implemented** |
-| NFR-3.3 | Set a request timeout when fetching upstream templates to prevent hanging connections | **Not Implemented** |
+| NFR-3.1 | Do not log or expose sensitive substitution values in production | Implemented (logging module, DEBUG-only values) |
+| NFR-3.2 | Validate that `portainer_template_url` points to an allowed domain or URL scheme (HTTPS only) | Implemented |
+| NFR-3.3 | Set a request timeout when fetching upstream templates to prevent hanging connections | Implemented (10s default, configurable) |
 
 ### NFR-4: Operability
 
@@ -87,8 +87,8 @@
 | ID | Requirement | Status |
 |----|-------------|--------|
 | NFR-5.1 | Codebase remains minimal and easy to understand (template project) | Implemented |
-| NFR-5.2 | Automated test suite covering core functionality | **Not Implemented** |
-| NFR-5.3 | CI pipeline for linting and testing | **Not Implemented** |
+| NFR-5.2 | Automated test suite covering core functionality | Implemented (pytest) |
+| NFR-5.3 | CI pipeline for linting and testing | Implemented (GitHub Actions) |
 
 ---
 
@@ -145,7 +145,7 @@ GET /modify?portainer_template_url=https://example.com/templates.json&TRAEFIK_IN
 
 ## 6. Implementation Gaps & Roadmap
 
-The following items are identified as gaps relative to the requirements above:
+*All previously identified gaps have been addressed as of 2026-04-08:*
 
 1. **Health-check endpoint (FR-3.1):** Add `GET /health` returning `{"status": "ok"}` for platform health checks and load balancer probes.
 
